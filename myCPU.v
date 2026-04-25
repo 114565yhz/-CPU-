@@ -2,6 +2,11 @@
 
 `include "defines.vh"
 
+//------------------------------------------------------------------------------
+// myCPU: 5-stage pipelined RV32I core
+// Stages: IF -> ID -> EX -> MEM -> WB
+// Includes hazard detection (forward/stall/flush) and bus interface.
+//------------------------------------------------------------------------------
 module myCPU (
     input  wire         cpu_rst,
     input  wire         cpu_clk,
@@ -25,11 +30,16 @@ module myCPU (
 //    output wire [31:0]  debug_wb_value
 //`endif
 );
-//trace
+// -----------------------------------------------------------------------------
+// Trace / debug wires (optional)
+// -----------------------------------------------------------------------------
 wire [31:0] pc_EX, pc_MEM, pc_WB;
 wire        have_inst_ID, have_inst_EX, have_inst_MEM, have_inst_WB;
 
 
+// -----------------------------------------------------------------------------
+// IF stage wires
+// -----------------------------------------------------------------------------
 wire [31:0] if_npc;
 wire [31:0] if_pc;
 wire [31:0] id_pc;
@@ -39,6 +49,9 @@ wire [31:0] id_pc4;
 wire [31:0] ex_pc4;
 
 //wire [31:0] pc4;
+// -----------------------------------------------------------------------------
+// ID/EX/MEM/WB shared datapath and control wires
+// -----------------------------------------------------------------------------
 wire [31:0] id_sext;
 wire [31:0] ex_sext;
 wire [31:0] mem_sext;
@@ -86,11 +99,15 @@ wire [31:0] mem_wD;
 wire [31:0] wb_wD;
 wire [31:0] mem_wD_temp;
 
+// Instruction address uses word addressing (drop lower 2 bits).
 assign inst_addr = if_pc[15:2];
 //assign Bus_wen = ram_we;
 //assign Bus_wdata = rD2;
 //assign Bus_addr = alu_c;
 
+// -----------------------------------------------------------------------------
+// Hazard control wires
+// -----------------------------------------------------------------------------
 wire stall;
 wire flush_if_id;
 wire flush_id_ex;
@@ -99,7 +116,22 @@ wire id_rf1_used;
 wire id_rf2_used;
 
 wire branched;
-// TODO: 完成你自己的单周期CPU设计
+// IF: next PC generation
+// IF: program counter register
+// IF/ID pipeline register
+// ID: immediate extension
+// ID: instruction decode / control generation
+// ID/WB: register file read & writeback
+// ID: ALU operand selection
+// ID/EX pipeline register (with forwarding override inputs)
+// EX: arithmetic/logic + branch condition
+// EX: select candidate writeback data
+// EX/MEM pipeline register
+// MEM: bus access and load/store data formatting
+// MEM: final writeback candidate selection
+// MEM/WB pipeline register
+// Global hazard detection / forwarding / stall & flush control
+// TODO: 瀹屾垚浣犺嚜宸辩殑鍗曞懆鏈烠PU璁捐
 NPC U_NPC(
     .rst(cpu_rst),
     .PC(if_pc),
