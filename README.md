@@ -1,4 +1,4 @@
-# MiniRV Pipelined CPU
+# 哈工大深圳（HITSZ）MiniRV Pipelined CPU
 
 <p align="center">
   <img alt="Verilog" src="https://img.shields.io/badge/HDL-Verilog-3b82f6">
