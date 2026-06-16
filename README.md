@@ -7,13 +7,13 @@
   <img alt="Course Project" src="https://img.shields.io/badge/HITsz-Course%20Project-ef4444">
 </p>
 
-哈尔滨工业大学（深圳）计算机设计与实践课程项目：一个面向 miniRV 指令集的 Verilog CPU 实现。项目从单周期 CPU 扩展到五级流水线结构，覆盖取指、译码、执行、访存和写回，并处理数据冒险与控制冒险。
+一个面向 miniRV 指令集的 Verilog CPU 实现。项目从单周期 CPU 扩展到五级流水线结构，覆盖取指、译码、执行、访存和写回，并处理数据冒险与控制冒险。
 
 ## Project Snapshot
 
 | 维度 | 内容 |
 | --- | --- |
-| 项目类型 | 计算机组成 / CPU 设计课程项目 |
+| 项目类型 | 计算机组成 / CPU 设计 |
 | HDL | Verilog |
 | ISA | miniRV / RISC-V style instructions |
 | 架构 | 单周期 CPU + 五级流水线 CPU |
